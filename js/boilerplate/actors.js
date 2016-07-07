@@ -599,6 +599,7 @@ var Actor = Box.extend({
     if (arguments.length < 5) {
       this.fillStyle = 'lightBlue';
     }
+    debugger;
   },
 
   /**

@@ -3,7 +3,10 @@
 /**
  * The {@link Player} object; an {@link Actor} controlled by user input.
  */
-var player;
+// var player;
+var pits;
+var treasuries;
+var turn;
 
 /**
  * Keys used for various directions.
@@ -21,6 +24,7 @@ var keys = {
   down: ['down', 's'],
   left: ['left', 'a'],
   right: ['right', 'd'],
+  go: ['space', 'enter']
 };
 
 /**
@@ -32,7 +36,10 @@ var preloadables = [];
  * A magic-named function where all updates should occur.
  */
 function update() {
-  player.update();
+  for (var i = 0; i < pits.length; i++) {
+    pits[i].update();
+  }
+  // player.update();
 }
 
 /**
@@ -42,7 +49,10 @@ function draw() {
   // Draw a background. This is just for illustration so we can see scrolling.
   context.drawCheckered(80, 0, 0, world.width, world.height);
 
-	player.draw();
+  for (var i = 0; i < pits.length; i++) {
+    pits[i].draw();
+  }
+	// player.draw();
 }
 
 /**
@@ -54,11 +64,31 @@ function draw() {
  */
 function setup(first) {
   // Change the size of the playable area. Do this before placing items!
-  world.resize(canvas.width + 200, canvas.height + 200);
+  world.resize(canvas.width, canvas.height);
 
   // Switch from side view to top-down.
   Actor.prototype.GRAVITY = false;
 
   // Initialize the player.
-  player = new Player();
+  // player = new Player();
+  pits = [];
+  treasuries = [];
+  turn = 0;
+
+  for (var i = 0, x=0; i < 6; i++) {
+    pits[i] = new Pit(i, "top", 100+50*x, 50);
+    x++;
+  }
+
+  for (var i = 6, x=5; i < 12; i++) {
+    pits[i] = new Pit(i, "bot", 100+50*x, 100);
+    x--;
+  }
+
+  treasuries[0] = new Treasury(0);
+  treasuries[1] = new Treasury(1);
+}
+
+function distributePebbles(startingPit) {
+
 }
