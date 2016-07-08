@@ -16,15 +16,18 @@ var Pit = Actor.extend({
     // Circle
     ctx.circle(x, y, r, this.fillStyle, 'black');
 		ctx.font = "48px serif";
-		ctx.strokeText(this.id, x-r+12, y+r-10)
+		ctx.strokeText(this.pebbleCount, x-r+12, y+r-10)
 	},
 	click: function(event) {
 		//results => goesAgain
 		//results => endingPit
-		var results = distributePebbles(this.id);
-		if (!results.goesAgain) {
-			steal(results.endingPit);
-			toggleTurn();
+		if (turn == this.side) {
+			var results = distributePebbles(this.id);
+
+			if (!results.goesAgain) {
+				steal(results.endingPit);
+				toggleTurn();
+			}
 		}
 	}
 });

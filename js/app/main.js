@@ -4,9 +4,13 @@
  * The {@link Player} object; an {@link Actor} controlled by user input.
  */
 // var player;
+var PIT_OFFSET = 150;
+var TITLE_OFFSET = 100;
+
 var pits;
 var treasuries;
 var turn;
+var turnTitle;
 
 /**
  * Keys used for various directions.
@@ -53,6 +57,8 @@ function draw() {
   for (var i = 0; i < pits.length; i++) {
     pits[i].draw();
   }
+
+	turnTitle.draw();
 	// player.draw();
 }
 
@@ -77,22 +83,23 @@ function setup(first) {
   turn = 0;
 
   for (var i = 0, x=0; i < 6; i++) {
-    pits[i] = new Pit(i, "top", 100+50*x, 50);
+    pits[i] = new Pit(i, "top", 100+50*x, PIT_OFFSET);
     x++;
   }
 
   for (var i = 6, x=5; i < 12; i++) {
-    pits[i] = new Pit(i, "bot", 100+50*x, 100);
+    pits[i] = new Pit(i, "bot", 100+50*x, PIT_OFFSET*2);
     x--;
   }
 
   treasuries[0] = new Treasury(0);
   treasuries[1] = new Treasury(1);
+
+	turnTitle = new TurnTitle(100, TITLE_OFFSET);
+
 }
 
 function distributePebbles(startingPit) {
-  //REFACTOR
-
   // Progresssive pit is any pit that is ended on (and you need to pick up those pebbles to continue)
   // Current pit is the pit that is being distributed one pebble.
 
@@ -100,7 +107,7 @@ function distributePebbles(startingPit) {
       currentPit = (startingPit + 1) % 12,
       goesAgain = false;
 
-  while(pits[progressivePit].pebbleCount > 1 || !goesAgain) {
+  while(pits[progressivePit].pebbleCount > 1) {
     pebblesToDistribute = pits[progressivePit].pebbleCount;
     pits[progressivePit].pebbleCount = 0;
 
@@ -125,11 +132,10 @@ function distributePebbles(startingPit) {
     progressivePit = currentPit;
   }
 
-  if (!goesAgain) {
-    toggleTurn();
+  return {
+    goesAgain: goesAgain,
+    endingPit: progressivePit
   }
-
-  return progressivePit;  // the pit that was ended on (with one pebble)
 }
 
 function toggleTurn() {
