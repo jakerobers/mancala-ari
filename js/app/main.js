@@ -39,6 +39,7 @@ function update() {
   for (var i = 0; i < pits.length; i++) {
     pits[i].update();
   }
+
   // player.update();
 }
 
@@ -90,5 +91,76 @@ function setup(first) {
 }
 
 function distributePebbles(startingPit) {
+  //REFACTOR
 
+  // Progresssive pit is any pit that is ended on (and you need to pick up those pebbles to continue)
+  // Current pit is the pit that is being distributed one pebble.
+
+  var progressivePit = startingPit
+      currentPit = (startingPit + 1) % 12,
+      goesAgain = false;
+
+  while(pits[progressivePit].pebbleCount > 1 || !goesAgain) {
+    pebblesToDistribute = pits[progressivePit].pebbleCount;
+    pits[progressivePit].pebbleCount = 0;
+
+    for (var i = 0; i < pebblesToDistribute; i++) {
+      //make sure to distribute to the treasuries too!
+      if (currentPit.id % 6 == 0) {
+        if (currentPit.id == 6) {
+          treasuries[1].pebbleCount++;
+          goesAgain = true;
+          continue;
+        } else {
+          treasuries[0].pebbleCount++;
+          goesAgain = true;
+          continue;
+        }
+      }
+
+      currentPit.pebbleCount++;
+      currentPit = (currentPit + 1) % 12;
+      goesAgain = false;
+    }
+    progressivePit = currentPit;
+  }
+
+  if (!goesAgain) {
+    toggleTurn();
+  }
+
+  return progressivePit;  // the pit that was ended on (with one pebble)
+}
+
+function toggleTurn() {
+  if ( turn == 0 ) {
+    turn  = 1;
+  } else {
+    turn = 0;
+  }
+}
+
+// Steals from the adjacent, oppenent pit
+function steal(pit) {
+  adjacent = 11 - pit;
+  treasuryDestination = 0;
+
+  if (adjacent < 6) {
+    treasuryDestination = 1;
+  }
+
+  pebblesStolen = pits[adjacent].pebbleCount;
+  treasuries[treasuryDestination] += pebblesStolen;
+  pits[adjacent].pebbleCount = 0;
+}
+
+function gameOver() {
+  gameOver = true;
+
+  for (var i = 0; i < 12 || gameOver; i++) {
+    if (pits[i].pebbleCount > 0) {
+      gameOver = false;
+    }
+  }
+  return gameOver;
 }
