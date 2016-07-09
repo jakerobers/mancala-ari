@@ -53,7 +53,13 @@ function draw() {
 	
 	turnTitle.draw();
 }
+function resetTime(){
+  var els = document.getElementsByClassName("fireworks");
 
+  Array.prototype.forEach.call(els, function(el) {
+    el.style.visibility = "visible";
+  });
+}
 /**
  * A magic-named function for one-time setup.
  *
