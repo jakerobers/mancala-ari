@@ -34,8 +34,16 @@ function update() {
  */
 function draw() {
   // Draw a background. This is just for illustration so we can see scrolling.
-  context.drawCheckered(80, 0, 0, world.width, world.height);
+  //context.drawCheckered(80, 0, 0, world.width, world.height);
+  var img = new Image();
+  //console.log("help");
+  img.onload = function () {
+    context.drawImage(img, 0, 0);
+  };
+  img.src = "img/cloudacus.jpg";
 
+  context.drawImage(img, 0, 0, img.width,    img.height,    // source rectangle
+      0, 0, canvas.width, canvas.height);
   for (var i = 0; i < pits.length; i++) {
     pits[i].draw();
   }

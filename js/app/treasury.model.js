@@ -15,7 +15,7 @@ var Treasury = Actor.extend({
     var r = (w+h)/4;
 
     // Circle
-    ctx.circle(x, y, r, this.fillStyle, 'black');
+    ctx.circle(x, y, r, this.fillStyle, 'gold');
 		ctx.font = "32px Arial";
 		ctx.strokeText(this.pebbleCount, x-10, y+10);
 	}
