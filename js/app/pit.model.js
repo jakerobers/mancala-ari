@@ -6,7 +6,21 @@ var Pit = Actor.extend({
 		this.height = 50;
 		this.x = x;
 		this.y = y;
-		this.pebbleCount = 4;
+		this.pebbleCount = 0;
+
+
+		this.listen('mousedown.select touchstart.select', function(event) {
+			//results => goesAgain
+			//results => endingPit
+			if (turn == this.side) {
+				var results = distributePebbles(this.id);
+
+				if (!results.goesAgain) {
+					steal(results.endingPit);
+					toggleTurn();
+				}
+			}
+		});
 	},
 	drawDefault: function(ctx, x, y, w, h) {
 		x = x + w/2;
@@ -15,19 +29,8 @@ var Pit = Actor.extend({
 
     // Circle
     ctx.circle(x, y, r, this.fillStyle, 'black');
-		ctx.font = "48px serif";
+		ctx.font = "32px Arial";
 		ctx.strokeText(this.pebbleCount, x-r+12, y+r-10)
-	},
-	click: function(event) {
-		//results => goesAgain
-		//results => endingPit
-		if (turn == this.side) {
-			var results = distributePebbles(this.id);
-
-			if (!results.goesAgain) {
-				steal(results.endingPit);
-				toggleTurn();
-			}
-		}
 	}
 });
+

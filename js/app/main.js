@@ -1,17 +1,3 @@
-// The main logic for your project goes in this file.
-
-/**
- * The {@link Player} object; an {@link Actor} controlled by user input.
- */
-// var player;
-var PIT_OFFSET = 150;
-var TITLE_OFFSET = 100;
-
-var pits;
-var treasuries;
-var turn;
-var turnTitle;
-
 /**
  * Keys used for various directions.
  *
@@ -40,11 +26,7 @@ var preloadables = [];
  * A magic-named function where all updates should occur.
  */
 function update() {
-  for (var i = 0; i < pits.length; i++) {
-    pits[i].update();
-  }
 
-  // player.update();
 }
 
 /**
@@ -58,8 +40,10 @@ function draw() {
     pits[i].draw();
   }
 
+	treasuries[PLAYER_1].draw();
+	treasuries[PLAYER_2].draw();
+	
 	turnTitle.draw();
-	// player.draw();
 }
 
 /**
@@ -80,93 +64,24 @@ function setup(first) {
   // player = new Player();
   pits = [];
   treasuries = [];
-  turn = 0;
+  turn = PLAYER_1;
 
   for (var i = 0, x=0; i < 6; i++) {
-    pits[i] = new Pit(i, "top", 100+50*x, PIT_OFFSET);
+    pits[i] = new Pit(i, PLAYER_1, PIT_OFFSET_X+50*x, PIT_OFFSET_Y*2);
     x++;
   }
 
   for (var i = 6, x=5; i < 12; i++) {
-    pits[i] = new Pit(i, "bot", 100+50*x, PIT_OFFSET*2);
+    pits[i] = new Pit(i, PLAYER_2, PIT_OFFSET_X+50*x, PIT_OFFSET_Y);
     x--;
   }
 
-  treasuries[0] = new Treasury(0);
-  treasuries[1] = new Treasury(1);
+	pits[1].pebbleCount = 2;
+	pits[3].pebbleCount = 2;
 
-	turnTitle = new TurnTitle(100, TITLE_OFFSET);
+  treasuries[PLAYER_1] = new Treasury(PLAYER_1, TREASURY_ONE_OFFSET_X, TREASURY_ONE_OFFSET_Y);
+  treasuries[PLAYER_2] = new Treasury(PLAYER_2, TREASURY_TWO_OFFSET_X, TREASURY_TWO_OFFSET_Y);
 
+	turnTitle = new TurnTitle(TITLE_OFFSET_X, TITLE_OFFSET_Y);
 }
 
-function distributePebbles(startingPit) {
-  // Progresssive pit is any pit that is ended on (and you need to pick up those pebbles to continue)
-  // Current pit is the pit that is being distributed one pebble.
-
-  var progressivePit = startingPit
-      currentPit = (startingPit + 1) % 12,
-      goesAgain = false;
-
-  while(pits[progressivePit].pebbleCount > 1) {
-    pebblesToDistribute = pits[progressivePit].pebbleCount;
-    pits[progressivePit].pebbleCount = 0;
-
-    for (var i = 0; i < pebblesToDistribute; i++) {
-      //make sure to distribute to the treasuries too!
-      if (currentPit.id % 6 == 0) {
-        if (currentPit.id == 6) {
-          treasuries[1].pebbleCount++;
-          goesAgain = true;
-          continue;
-        } else {
-          treasuries[0].pebbleCount++;
-          goesAgain = true;
-          continue;
-        }
-      }
-
-      currentPit.pebbleCount++;
-      currentPit = (currentPit + 1) % 12;
-      goesAgain = false;
-    }
-    progressivePit = currentPit;
-  }
-
-  return {
-    goesAgain: goesAgain,
-    endingPit: progressivePit
-  }
-}
-
-function toggleTurn() {
-  if ( turn == 0 ) {
-    turn  = 1;
-  } else {
-    turn = 0;
-  }
-}
-
-// Steals from the adjacent, oppenent pit
-function steal(pit) {
-  adjacent = 11 - pit;
-  treasuryDestination = 0;
-
-  if (adjacent < 6) {
-    treasuryDestination = 1;
-  }
-
-  pebblesStolen = pits[adjacent].pebbleCount;
-  treasuries[treasuryDestination] += pebblesStolen;
-  pits[adjacent].pebbleCount = 0;
-}
-
-function gameOver() {
-  gameOver = true;
-
-  for (var i = 0; i < 12 || gameOver; i++) {
-    if (pits[i].pebbleCount > 0) {
-      gameOver = false;
-    }
-  }
-  return gameOver;
-}
