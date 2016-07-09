@@ -21,21 +21,21 @@ var turnTitle;
 
 function distributeHand(currentPit, pebblesInHand) {
 	while (pebblesInHand > 0) {
-  	currentPit.pebbleCount++;
-		pebblesInHand--;
-
-		if (currentPit.id == 5 && turn == PLAYER_1) {
+		if (currentPit.id == 6 && turn == PLAYER_1) {
       treasuries[PLAYER_1].pebbleCount++;
 			pebblesInHand--;
       goesAgain = true;
-    } else if (currentPit.id == 11 && turn == PLAYER_2) {
+    } else if (currentPit.id == 0 && turn == PLAYER_2) {
       treasuries[PLAYER_2].pebbleCount++;
 			pebblesInHand--;
       goesAgain = true;
     }
 
 		if (pebblesInHand <= 0) {
-			break;
+			return {
+				endingPit: currentPit,
+				goesAgain: true
+			}
 		}
 
 		// dont increment current pit if its the last pebble thrown 
@@ -43,9 +43,15 @@ function distributeHand(currentPit, pebblesInHand) {
     	currentPit = (currentPit + 1) % 12;
 		}
 
+  	currentPit.pebbleCount++;
 		pebblesInHand--;
+
     goesAgain = false;
   }
+	return {
+		endingPit: currentPit,
+		goesAgain: goesAgain
+	}
 }
 
 function distributePebbles(startingPit) {
