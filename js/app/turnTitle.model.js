@@ -5,8 +5,8 @@ var TurnTitle = Box.extend({
 	},
 	drawDefault: function(ctx) {
 		text = "Player " + (turn+1) + " turn";
-		ctx.strokestyle = "#FF0000";
 		ctx.font = "32px Arial"
+		ctx.fillStyle = "white"
 		ctx.fillText(text, this.x, this.y, 300,50)
 	}
 })

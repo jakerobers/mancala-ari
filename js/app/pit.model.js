@@ -35,7 +35,8 @@ var Pit = Actor.extend({
     // Circle
     ctx.circle(x, y, r, this.fillStyle, 'purple');
 		ctx.font = "32px Arial";
-		ctx.strokeText(this.pebbleCount, x-r+12, y+r-10)
+		ctx.fillStyle = "purple"
+		ctx.fillText(this.pebbleCount, x-r+12, y+r-10)
 	}
 });
 
