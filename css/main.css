@@ -14,14 +14,20 @@ html, button, input, select, textarea {
 html, body {
   background-color: #EEEEEE;
   font-family: Arial, sans-serif;
+  overflow: none;
 }
 
 html, body, canvas {
   padding: 0;
-  margin: 5%;
+  margin-left: 5%;
+  margin-top: 3%;
+  margin-right: 5%;
 }
 
 canvas {
+  position: fixed;
+  left: 15%;
+  top: 175px;
   -khtml-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
