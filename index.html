@@ -35,17 +35,25 @@
   <![endif]-->
   <div id="main">
     <div class="row">
-    <button onClick="resetTime()" style="text-align">Reset the magic</button>
+      <div class="col-md-4">
+        <img class="fireworks" style="visibility: hidden" src="img/fireworks1.gif"></div>
+      <div class="col-md-4">
+        <button onClick="resetTime()" style="text-align">Reset the magic</button>
+      </div>
+      <div class="col-md-4">
+        <img class="fireworks" style="visibility: hidden" src="img/fireworks1.gif">
+      </div>
+    </div>
+    <div class="row">
     <div id="content" class="row">
       <noscript>You must have JavaScript enabled to use this site.</noscript>
           <div class="col-md-2">
-            <img class="fireworks" style="visibility: hidden" src="img/fireworks1.gif"></div>
           <div class="col-md-8">
             <canvas id="canvas" width="800" height="600"> <!-- data-resize="full" -->
             Your browser does not support the &lt;canvas&gt; element!
             </canvas>
           </div>
-      <div class="col-md-2"><img class="fireworks" style="visibility: hidden" src="img/fireworks1.gif"></div></div>
+      <div class="col-md-2"></div>
 
     </div> <!-- /content -->
 
