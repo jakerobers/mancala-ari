@@ -26,7 +26,6 @@ var preloadables = [];
  * A magic-named function where all updates should occur.
  */
 function update() {
-
 }
 
 /**
@@ -52,6 +51,10 @@ function draw() {
 	treasuries[PLAYER_2].draw();
 	
 	turnTitle.draw();
+
+  if (gameIsOver) {
+    gameOverTitle.draw();
+  }
 }
 function resetTime(){
   var els = document.getElementsByClassName("fireworks");
@@ -79,6 +82,7 @@ function setup(first) {
   pits = [];
   treasuries = [];
   turn = PLAYER_1;
+  gameIsOver = false;
 
   for (var i = 0, x=0; i < 6; i++) {
     pits[i] = new Pit(i, PLAYER_1, PIT_OFFSET_X+50*x, PIT_OFFSET_Y*2);
@@ -94,5 +98,6 @@ function setup(first) {
   treasuries[PLAYER_2] = new Treasury(PLAYER_2, TREASURY_TWO_OFFSET_X, TREASURY_TWO_OFFSET_Y);
 
 	turnTitle = new TurnTitle(TITLE_OFFSET_X, TITLE_OFFSET_Y);
+  gameOverTitle = new GameOverTitle(GAMEOVER_OFFSET_X, GAMEOVER_OFFSET_Y);
 }
 

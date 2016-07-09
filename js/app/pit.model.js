@@ -10,8 +10,10 @@ var Pit = Actor.extend({
 
 
 		this.listen('mousedown.select touchstart.select', function(event) {
-			//results => goesAgain
-			//results => endingPit
+			if (gameIsOver) {
+				return;
+			}
+
 			if (turn == this.side) {
 				var results = distributePebbles(this.id);
 
@@ -19,6 +21,9 @@ var Pit = Actor.extend({
 					steal(results.endingPit.id);
 					toggleTurn();
 				}
+				if (gameOver()) {
+					gameIsOver = true;
+			  }
 			}
 		});
 	},

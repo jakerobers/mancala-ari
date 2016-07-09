@@ -7,6 +7,9 @@ var PIT_OFFSET_Y = 150;
 var TITLE_OFFSET_X = 500;
 var TITLE_OFFSET_Y = 100;
 
+var GAMEOVER_OFFSET_X = 200;
+var GAMEOVER_OFFSET_Y = 100;
+
 var TREASURY_ONE_OFFSET_X = 500;
 var TREASURY_ONE_OFFSET_Y = 200;
 
@@ -17,6 +20,8 @@ var pits;
 var treasuries;
 var turn;
 var turnTitle;
+var gameOverTitle;
+var gameIsOver;
 
 
 function distributeHand(currentPit, pebblesInHand) {
@@ -105,13 +110,26 @@ function steal(pit) {
 }
 
 function gameOver() {
-  gameOver = true;
+  var isDone = false;
 
-  for (var i = 0; i < 12 || gameOver; i++) {
-    if (pits[i].pebbleCount > 0) {
-      gameOver = false;
-    }
+  var sum = 0;
+  for (var i = 0; i < 6; i++) {
+    sum += pits[i].pebbleCount;
   }
-  return gameOver;
+  
+  if ( sum === 0 && turn == PLAYER_1) {
+    isDone = true;
+  }
+
+  sum = 0;
+  for (var i = 0; i < 6; i++) {
+    sum += pits[i].pebbleCount;
+  }
+
+  if ( sum === 0 && turn == PLAYER_2) {
+    isDone = true;
+  }
+
+  return isDone;
 }
 
