@@ -24,11 +24,9 @@ function distributeHand(currentPit, pebblesInHand) {
 		if (currentPit.id == 6 && turn == PLAYER_1) {
       treasuries[PLAYER_1].pebbleCount++;
 			pebblesInHand--;
-      goesAgain = true;
     } else if (currentPit.id == 0 && turn == PLAYER_2) {
       treasuries[PLAYER_2].pebbleCount++;
 			pebblesInHand--;
-      goesAgain = true;
     }
 
 		if (pebblesInHand <= 0) {
@@ -38,19 +36,18 @@ function distributeHand(currentPit, pebblesInHand) {
 			}
 		}
 
-		// dont increment current pit if its the last pebble thrown 
-		if (pebblesInHand > 1) {
-    	currentPit = (currentPit + 1) % 12;
-		}
-
   	currentPit.pebbleCount++;
-		pebblesInHand--;
 
-    goesAgain = false;
+    if (pebblesInHand > 1) {
+      currentPit = pits[(currentPit.id + 1) % 12];
+    }
+
+    pebblesInHand--;
   }
+
 	return {
 		endingPit: currentPit,
-		goesAgain: goesAgain
+		goesAgain: false 
 	}
 }
 
@@ -66,12 +63,15 @@ function distributePebbles(startingPit) {
   	}	
 	}
 
-  while(progressivePit.pebbleCount > 1 || isFirstRun) {
-    pebblesInHand = progressivePit.pebbleCount;
+  while (progressivePit.pebbleCount > 1 || isFirstRun) {
+  	pebblesInHand = progressivePit.pebbleCount;
     progressivePit.pebbleCount = 0;
 
-		nextPit = pit[( progressivePit + 1 ) % 12];
-		progressivePit = pits[distributeHand(nextPit)];
+		nextPit = pits[( progressivePit.id + 1 ) % 12];
+		retVal = distributeHand(nextPit, pebblesInHand);
+	
+		progressivePit = retVal.endingPit; 
+		goesAgain = retVal.goesAgain;
 		isFirstRun = false;
   }
 
