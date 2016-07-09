@@ -93,14 +93,15 @@ function toggleTurn() {
 function steal(pit) {
   adjacent = 11 - pit;
 
-  treasuryDestination = PLAYER_1;
-  if (adjacent < 6) {
-    treasuryDestination = PLAYER_2;
-  }
-
-  pebblesStolen = pits[adjacent].pebbleCount;
-  treasuries[treasuryDestination].pebbleCount += pebblesStolen;
-  pits[adjacent].pebbleCount = 0;
+  if (turn == PLAYER_1 && adjacent > 5) {
+    pebblesStolen = pits[adjacent].pebbleCount;
+    treasuries[PLAYER_1].pebbleCount += pebblesStolen;
+    pits[adjacent].pebbleCount = 0;
+  } else if (turn == PLAYER_2 && adjacent <= 5) {
+    pebblesStolen = pits[adjacent].pebbleCount;
+    treasuries[PLAYER_2].pebbleCount += pebblesStolen;
+    pits[adjacent].pebbleCount = 0;
+  }  
 }
 
 function gameOver() {

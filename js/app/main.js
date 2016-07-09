@@ -76,9 +76,6 @@ function setup(first) {
     x--;
   }
 
-	pits[1].pebbleCount = 2;
-	pits[3].pebbleCount = 2;
-
   treasuries[PLAYER_1] = new Treasury(PLAYER_1, TREASURY_ONE_OFFSET_X, TREASURY_ONE_OFFSET_Y);
   treasuries[PLAYER_2] = new Treasury(PLAYER_2, TREASURY_TWO_OFFSET_X, TREASURY_TWO_OFFSET_Y);
 

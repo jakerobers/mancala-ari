@@ -6,7 +6,7 @@ var Pit = Actor.extend({
 		this.height = 50;
 		this.x = x;
 		this.y = y;
-		this.pebbleCount = 0;
+		this.pebbleCount = 4;
 
 
 		this.listen('mousedown.select touchstart.select', function(event) {
@@ -16,7 +16,7 @@ var Pit = Actor.extend({
 				var results = distributePebbles(this.id);
 
 				if (!results.goesAgain) {
-					steal(results.endingPit);
+					steal(results.endingPit.id);
 					toggleTurn();
 				}
 			}
