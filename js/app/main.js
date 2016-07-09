@@ -60,8 +60,14 @@ function resetTime(){
   var els = document.getElementsByClassName("fireworks");
 
   Array.prototype.forEach.call(els, function(el) {
+
+    el.src = el.src.replace(/\?.*$/,"")+"?x="+Math.random();
     el.style.visibility = "visible";
   });
+  setTimeout(function(){
+    Array.prototype.forEach.call(els, function(el) {
+    el.style.visibility = "hidden";
+  }); }, 2000);
   setup();
 }
 /**
