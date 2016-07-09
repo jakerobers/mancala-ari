@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
   <link rel="icon" href="favicon.ico"/>
   <!-- <link rel="author" href="humans.txt" /> -->
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" media="all" href="css/reset.css" />
   <link rel="stylesheet" media="all" href="css/main.css" />
   <link rel="stylesheet" media="all" href="css/utilities.css" />
@@ -34,16 +34,22 @@
     </p>
   <![endif]-->
   <div id="main">
-    <div id="content">
+    <div class="row">
+    <button onClick="resetTime()" style="text-align">Reset the magic</button>
+    <div id="content" class="row">
       <noscript>You must have JavaScript enabled to use this site.</noscript>
-      <canvas id="canvas" width="800" height="600"> <!-- data-resize="full" -->
-        Your browser does not support the &lt;canvas&gt; element!
-      </canvas>
+          <div class="col-md-2">
+            <img class="fireworks" style="visibility: hidden" src="img/fireworks1.gif"></div>
+          <div class="col-md-8">
+            <canvas id="canvas" width="800" height="600"> <!-- data-resize="full" -->
+            Your browser does not support the &lt;canvas&gt; element!
+            </canvas>
+          </div>
+      <div class="col-md-2"><img class="fireworks" style="visibility: hidden" src="img/fireworks1.gif"></div></div>
+
     </div> <!-- /content -->
 
-    <button onClick="resetTime()" style="text-align:center">Hello world</button>
   </div> <!-- /main -->
-  <img class="fireworks" style="visibility: hidden" src="img/fireworks.gif">
   <audio autoplay>
     <source src="audio/musical.mp3" type="audio/mp3"  >
     Your browser does not support the audio element.

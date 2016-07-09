@@ -62,6 +62,7 @@ function resetTime(){
   Array.prototype.forEach.call(els, function(el) {
     el.style.visibility = "visible";
   });
+  setup();
 }
 /**
  * A magic-named function for one-time setup.
